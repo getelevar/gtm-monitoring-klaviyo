@@ -113,11 +113,11 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-const log = require('logToConsole');
-const createQueue = require('createQueue');
+const log = require("logToConsole");
+const createQueue = require("createQueue");
 
-const TAG_INFO = 'elevar_gtm_tag_info';
-const kDataLayer = '_learnq';
+const TAG_INFO = "elevar_gtm_tag_info";
+const kDataLayer = "_learnq";
 const addTagInformation = createQueue(TAG_INFO);
 const pushToKlaviyo = createQueue(kDataLayer);
 
@@ -126,26 +126,26 @@ const dataArray = [data.type];
 const gtmVars = [];
 
 if (data.eventName) {
-	dataArray.push(data.eventName);
+  dataArray.push(data.eventName);
 }
 
 if (data.content) {
-  	// --- Same as in Facebook and Snapchat pixels ---
-	const contentObj = {};
+  // --- Same as in Facebook and Snapchat pixels ---
+  const contentObj = {};
 
-    data.content.forEach((item) => {
-        contentObj[item.key] = item.value;
-      	if (item.variableName) gtmVars.push(item.variableName);
-    });
-  
-  	dataArray.push(contentObj);
+  data.content.forEach(item => {
+    contentObj[item.key] = item.value;
+    if (item.variableName) gtmVars.push(item.variableName);
+  });
+
+  dataArray.push(contentObj);
 }
 
 // Always add tag and variable info to window
 addTagInformation({
   tagName: data.tagName,
   eventId: data.gtmEventId,
-  variables: gtmVars,
+  variables: gtmVars
 });
 
 // Push Data

@@ -1,11 +1,3 @@
-___TERMS_OF_SERVICE___
-
-By creating or modifying this file you agree to Google Tag Manager's Community
-Template Gallery Developer Terms of Service available at
-https://developers.google.com/tag-manager/gallery-tos (or such other URL as
-Google may provide), as modified from time to time.
-
-
 ___INFO___
 
 {
@@ -13,7 +5,7 @@ ___INFO___
   "id": "cvt_temp_public_id",
   "version": 1,
   "securityGroups": [],
-  "displayName": "Klaviyo / Elevar GTM Monitoring",
+  "displayName": "Klaviyo / Elevar Monitoring",
   "brand": {
     "id": "brand_dummy",
     "displayName": ""
@@ -143,6 +135,7 @@ if (data.content) {
 
 // Always add tag and variable info to window
 addTagInformation({
+  channel: 'klaviyo',
   tagName: data.tagName,
   eventId: data.gtmEventId,
   variables: gtmVars
@@ -305,7 +298,10 @@ scenarios:
     assertThat(window[KLAVIYO][0]).isEqualTo(['track', 'Add To Cart', { currency: 'EUR', price: 40.99 }]);
 
     assertThat(window[TAG_INFO]).hasLength(1);
-    assertThat(window[TAG_INFO][0]).isEqualTo({tagName: "Klaviyo - Add To Cart", eventId: 13, variables: ['dlv - Global - Currency', 'dlv - Purchase - Total Price']});
+    assertThat(window[TAG_INFO][0].tagName).isEqualTo("Klaviyo - Add To Cart");
+    assertThat(window[TAG_INFO][0].channel).isEqualTo('klaviyo');
+    assertThat(window[TAG_INFO][0].eventId).isEqualTo(13);
+    assertThat(window[TAG_INFO][0].variables).isEqualTo(['dlv - Global - Currency', 'dlv - Purchase - Total Price']);
 - name: Track // Without Variable Names
   code: |-
     let mockData = {
@@ -329,7 +325,7 @@ scenarios:
     assertThat(window[KLAVIYO][0]).isEqualTo(['track', 'Add To Cart', { currency: 'EUR', price: 40.99 }]);
 
     assertThat(window[TAG_INFO]).hasLength(1);
-    assertThat(window[TAG_INFO][0]).isEqualTo({tagName: "Klaviyo - Add To Cart", eventId: 13, variables: []});
+    assertThat(window[TAG_INFO][0].variables).isEqualTo([]);
 - name: Track // With no data
   code: |-
     let mockData = {
@@ -349,11 +345,7 @@ scenarios:
     assertThat(window[KLAVIYO][0]).isEqualTo(['track', 'Add To Cart']);
 
     assertThat(window[TAG_INFO]).hasLength(1);
-    assertThat(window[TAG_INFO][0]).isEqualTo({
-      tagName: "Klaviyo - Add To Cart",
-      eventId: 13,
-      variables: []
-    });
+    assertThat(window[TAG_INFO][0].variables).isEqualTo([]);
 - name: Track // With no Event Name
   code: |-
     const mockData = {
@@ -377,7 +369,7 @@ scenarios:
     assertThat(window[KLAVIYO][0]).isEqualTo(['track', { currency: 'EUR', price: 40.99 }]);
 
     assertThat(window[TAG_INFO]).hasLength(1);
-    assertThat(window[TAG_INFO][0]).isEqualTo({tagName: "Klaviyo - Add To Cart", eventId: 13, variables: ['dlv - Global - Currency', 'dlv - Purchase - Total Price']});
+    assertThat(window[TAG_INFO][0].variables).isEqualTo(['dlv - Global - Currency', 'dlv - Purchase - Total Price']);
 - name: Identify // Default
   code: |-
     const mockData = {
@@ -403,11 +395,8 @@ scenarios:
     }]);
 
     assertThat(window[TAG_INFO]).hasLength(1);
-    assertThat(window[TAG_INFO][0]).isEqualTo({
-      tagName: "Klaviyo - Page View",
-      eventId: 13,
-      variables: ["dlv - User - Email", "dlv - User - First Name"]
-    });
+    assertThat(window[TAG_INFO][0].tagName).isEqualTo("Klaviyo - Page View");
+    assertThat(window[TAG_INFO][0].variables).isEqualTo(["dlv - User - Email", "dlv - User - First Name"]);
 setup: "const log = require('logToConsole');\n\n// Custom window object used by mock\
   \ functions\nlet window = {};\nconst TAG_INFO = 'elevar_gtm_tag_info';\nconst KLAVIYO\
   \ = '_learnq';\n\n/*\nCreates an array in the window with the key provided and\n\

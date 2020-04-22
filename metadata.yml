@@ -1,2 +1,5 @@
 homepage: "https://www.getelevar.com"
 documentation: "https://github.com/getelevar/gtm-monitoring-klaviyo/blob/master/README.md"
+versions:
+  - sha: 20601492ab560acff9200068c69e0e81a86e5baf
+    changeNotes: Initial release.
